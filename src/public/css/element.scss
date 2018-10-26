@@ -1,0 +1,70 @@
+@import './layout.scss';
+
+// 列表
+@mixin list($direction:column) {
+	@include flex($direction)
+}
+
+// 超出文本显式省略号
+@mixin truncation {
+	overflow: hidden;
+	text-overflow:ellipsis;
+	white-space: nowrap;
+}
+
+// 多行显示省略号
+@mixin multiline-truncation($clamp:2){
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: $clamp;
+	overflow: hidden;
+}
+
+// 面板
+@mixin panel {
+	width: 100%;
+	overflow:hidden;
+	margin-bottom:20px;
+}
+
+// 箭头
+@mixin leftArrow($width:14px, $bg: #fff,$rotate:rotate(-45deg)) {
+	width:$width;
+	height: $width;
+	border: 2px solid $bg {
+		left-color: transparent;
+		top-color: transparent;
+	};
+	transform:$rotate;
+}
+
+// 箭头
+@mixin leftArrowBottom($width:14px, $bg: #fff) {
+	width:$width;
+	height: $width;
+	border: 2px solid $bg {
+		left-color: transparent;
+		top-color: transparent;
+	};
+	transform:rotate(-315deg);
+}
+
+//三角形
+@mixin triangletop($bg: #000,$size: 6px) {
+	width:0;
+	height:0;
+	border:$size solid $bg;
+	border-top-color: transparent;
+	border-left-color:transparent;
+	transform:rotate(45deg);
+}
+
+//三角形
+@mixin trianglebt($bg: #333,$size: 6px) {
+	width:0;
+	height:0;
+	border:$size solid $bg;
+	border-bottom-color: transparent;
+	border-right-color:transparent;
+	transform:rotate(45deg);
+}
