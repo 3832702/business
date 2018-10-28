@@ -9,6 +9,9 @@
 </template>
 
 <script>
+
+import { mapMutations } from 'vuex'
+
 export default {
 	props: {
 		title: {
@@ -22,6 +25,9 @@ export default {
     	}
   	},
   	methods: {
+  		...mapMutations([
+  			'CHANGE_BACK'
+  		]),
   		/*
   			@回退到上一页
   		 */

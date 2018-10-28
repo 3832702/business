@@ -1,13 +1,15 @@
 <template>
 
-	<Slider cname="slider" :class="$style.slider" :sliderData="sliderData">
+	<Slider cname="slider" :class="$style.slider" :sliderData="banner_list">
 		<template slot-scope="slotProps">
-			<img :class="$style.bg" :src="slotProps.itemData.img">
-			<div :class="$style.avatar">
-				<img :src="slotProps.itemData.avatar" />
-			</div>
-			<h4>{{ slotProps.itemData.title }}</h4>
-			<span>{{ slotProps.itemData.user_name }}</span>
+			<router-link to="" tag="div">
+				<img :class="$style.bg" :src="slotProps.itemData.img">
+				<div :class="$style.avatar">
+					<img :src="slotProps.itemData.avatar" />
+				</div>
+				<h4>{{ slotProps.itemData.title }}</h4>
+				<span>{{ slotProps.itemData.user_name }}</span>
+			</router-link>
 		</template>	
 	</Slider>
 </template>
@@ -16,48 +18,21 @@
 
 import Slider from '../../public/common/slider.vue'
 
-const sliderData = [
-	{
-		id: 1,
-		base_name: '/',
-		img: 'http://i2.tiimg.com/570833/a9dff4656d5bbd5cs.png',
-		user_name: '离城的小柚',
-		avatar: 'http://i4.fuimg.com/570833/612a9c7e6b3b8bb0s.jpg',
-		title: '色香味俱全的香辣蟹！'
-	},
-	{
-		id: 2,
-		base_name: '/',
-		img: 'http://i4.fuimg.com/570833/622bdc24cb6ac704s.jpg',
-		user_name: '离城的大柚',
-		avatar: 'http://i4.fuimg.com/570833/612a9c7e6b3b8bb0s.jpg',
-		title: '色香味俱全的剁椒鱼头！'
-	},
-	{
-		id: 3,
-		base_name: '/',
-		img: 'http://i4.fuimg.com/570833/41abff403069f9a3s.jpg',
-		user_name: '离城的中柚',
-		avatar: 'http://i4.fuimg.com/570833/612a9c7e6b3b8bb0s.jpg',
-		title: '色香味俱全的泡椒牛蛙！'
-	},
-	{
-		id: 4,
-		base_name: '/',
-		img: 'http://i4.fuimg.com/570833/83d183b182385642s.jpg',
-		user_name: '离城的微柚',
-		avatar: 'http://i4.fuimg.com/570833/612a9c7e6b3b8bb0s.jpg',
-		title: '色香味俱全的吃的！'
-	}
-]
-
 export default {
+	props: {
+		banner_list: {
+			type: Array,
+			default() {
+				return []
+			}
+		}
+	},
 	components: {
 		Slider
 	},
 	data () {
     	return {
-    		sliderData
+    		
     	}
    	}
 }

@@ -1,6 +1,9 @@
 <template>
 	<div>
-		<router-view></router-view>
+		<keep-alive>
+			<router-view v-if="$route.meta.is_keep"></router-view>
+		</keep-alive>
+		<router-view v-if="!$route.meta.is_keep"></router-view>
 	</div>
 </template>
 
@@ -11,7 +14,7 @@ export default {
   name: 'app',
   data () {
     return {
-    	message: '你好，vue'
+    	
     }
   }
 }

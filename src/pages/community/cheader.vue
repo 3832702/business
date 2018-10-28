@@ -1,6 +1,7 @@
 <template>
 	<div :class="$style.cheader">
-		<Heador :title="title">
+		<Heador>
+			<h3>{{ title }}</h3>
 			<router-link 
 				to="/vegetable" 
 				tag="div" 
@@ -59,12 +60,13 @@ export default {
 		font-size:26px;
 		position:absolute;
 		z-index:111;
-		left:120px;
+		left:40px;
 		top:0;
 		span {
 			@include truncation;
 			max-width:100px;
 			display:inline-block;
+			margin-right:5px;
 		}
 		&:after {
 			@include leftArrowBottom(8px, #3f3700);
@@ -72,7 +74,7 @@ export default {
 			display:inline-block;
 			position:absolute;
 			right:-20px;
-			top:40px;
+			top:35px;
 		}
 	}
 }

@@ -1,5 +1,6 @@
 <template>
-	<Heador :title="title" :class="$style.myheader">
+	<Heador :class="$style.myheader">
+		<h3>{{ title }}</h3>
 		<router-link to="/personal" tag="div" :class="$style.more" slot="rightico"></router-link>
 	</Heador>
 </template>

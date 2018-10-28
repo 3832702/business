@@ -5,7 +5,6 @@ if (process.env.NODE_ENV === 'production') {
 	axios.defaults.baseURL = 'https://easy-mock.com/mock/5b5fb5fd9f3d1d7bfe3a6fb8/example'
 }
 
-
 //http response 拦截器
 axios.interceptors.response.use(
   response => {

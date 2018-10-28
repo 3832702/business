@@ -129,41 +129,114 @@ import TopicList from '../pages/community/topic-list/index.vue'
 
 const config = new VueRouter({
 	//mode: 'history',
+	scrollBehavior(to, from, savedPosition) {
+		if (savedPosition) {
+			return savedPosition
+		} 
+
+		return {x: 0, y: 0}
+	},
 	routes: [
+		// 主页
 		{
-			path: '/',
+			path: '/',  
 			name: 'Home',
-			component: Home
+			component: Home,
+			meta: {
+				is_back: false,
+				is_keep: true
+			}
 		},
+		// 首页 今日最新
 		{
-			path: '/newest',
+			path: '/newest',  
 			name: 'Newest',
 			component: Newest
 		},
+		// 首页 精品菜单
 		{
 			path: '/boutique',
 			name: 'Boutique',
 			component: Boutique
 		},
+		// 首页 视频专区
 		{
 			path: '/video',
 			name: 'Video',
 			component: Video
 		},
+		// 首页 好友动态
 		{
 			path: '/friends',
 			name: 'Friends',
 			component: Friends
 		},
+
+		// 首页 全部分类
+		{
+			path: '/menu',
+			name: 'Menu',
+			component: Menu
+		},
+		// 首页 分类子栏目
+		{
+			path: '/menu/sub',
+			name: 'SubMenu',
+			component: MenuSub
+		},
+		// 分类 百度百科
+		{
+			path: '/encyclopedias',
+			name: 'Encyclopedias',
+			component: Encyclopedias
+		},
+
+		// 集市
 		{
 			path: '/market',
 			name: 'Market',
-			component: Market
+			component: Market,
+			meta: {
+				is_keep: true, // 是否需要缓存
+				is_back: false // 是否通过回退按钮点击
+			}
 		},
+		// 集市栏目页
+		{
+			path: '/markettwo',
+			name: 'MarketTwo',
+			component: MarketTwo
+		},
+		// 商品详情页
+		{
+			path: '/marketdetails/:id',
+			name: 'marketDetails',
+			component: MarketDetails
+		},
+		// 店铺页
+		{
+			path: '/marketshop',
+			name: 'MarketShop',
+			component: MarketShop
+		},
+		// 提交订单
+		{
+			path: '/orderdetails',
+			name: 'OrderDetails',
+			component: OrderDetails
+		},
+		// 购物车
+		{
+			path: '/cart',
+			name: 'Cart',
+			component: Cart
+		},
+		// 社区
 		{
 			path: '/community',
 			component: Community,
 			children: [
+				// 社区分享列表
 				{
 					path: '',
 					name: 'Community',
@@ -172,6 +245,7 @@ const config = new VueRouter({
 					},
 					component: Share
 				},
+				// 社区关注列表
 				{
 					path: 'follow',
 					meta: {
@@ -182,45 +256,24 @@ const config = new VueRouter({
 				}
 			]
 		},
-		{
-			path: '/markettwo',
-			name: 'MarketTwo',
-			component: MarketTwo
-		},
-		{
-			path: '/marketdetails',
-			name: 'MarketDetails',
-			component: MarketDetails
-		},
-		{
-			path: '/marketshop',
-			name: 'MarketShop',
-			component: MarketShop
-		},
-		{
-			path: '/orderdetails',
-			name: 'OrderDetails',
-			component: OrderDetails
-		},
-		{
-			path: '/cart',
-			name: 'Cart',
-			component: Cart
-		},
+		// 社区  用户页
 		{
 			path: '/user',
 			component: UserCenter,
 			children: [
+				// 用户菜谱
 				{
 					path: '',
 					name: 'User',
 					component: UserMenu
 				},
+				// 用户帖子
 				{
 					path: 'diary',
 					name: 'Diary',
 					component: UserDiary
 				},
+				// 用户作品
 				{
 					path: 'works',
 					name: 'Works',
@@ -228,70 +281,66 @@ const config = new VueRouter({
 				}
 			]
 		},
+		// 社区 话题
 		{
 			path: '/topic',
 			name: 'Topic',
 			component: Topic
 		},
+		// 社区 话题列表
 		{
 			path: '/topiclist',
 			name: 'TopicList',
 			component: TopicList
 		},
+		// 社区  分类
 		{
 			path: '/vegetable',
 			name: 'Vegetable',
 			component: Vegetable
 		},
-		{
-			path: '/personal',
-			name: 'Personal',
-			component: Personal
-		},
-		{
-			path: '/menu',
-			name: 'Menu',
-			component: Menu
-		},
-		{
-			path: '/menu/sub',
-			name: 'SubMenu',
-			component: MenuSub
-		},
-		{
-			path: '/encyclopedias',
-			name: 'Encyclopedias',
-			component: Encyclopedias
-		},
+
+		// 帖子详情
 		{
 			path: '/cooking',
 			name: 'Cooking',
 			component: Cooking
 		},
+
+		// 全部评论
 		{
 			path: '/comment',
 			name: 'Comment',
 			component: Comment
 		},
+
+		// 我的消息
 		{
 			path: '/news',
 			name: 'News',
 			component:News
 		},
+
+		// 搜索页
 		{
 			path: '/search',
 			component: Search,
 			children: [
+				// 菜谱搜索
 				{
 					path: '',
 					name: 'Search',
 					component: SearchFood
 				},
+
+				// 商品搜索
 				{
 					path: 'goods',
 					name: 'SearchGoods',
 					component: SearchGoods
 				},
+
+				// 用户搜索
 				{
 					path: 'user',
 					name: 'SearchUser',
@@ -299,20 +348,24 @@ const config = new VueRouter({
 				}
 			]
 		},
+		// 登陆页
 		{
 			path: '/login',
 			component: Login,
 			children: [
+				// 登陆
 				{
 					path: '',
 					name: 'Login',
 					component: Landing
 				},
+				// 忘记密码
 				{
 					path: '/forget',
 					name: 'Forget',
 					component: Forget
 				},
+				// 注册
 				{
 					path: '/register',
 					name: 'Register',
@@ -325,49 +378,64 @@ const config = new VueRouter({
 			path: '/my',
 			name: 'my',
 			meta: {
-				is_login: true
+				is_login: true,
+				is_keep: true, // 是否需要缓存
+				is_back: false // 是否通过回退按钮点击
 			},
-			component: My,
-			children: [
-				{
-					path: 'collection',
-					name: 'collection',
-					component: Collection
-				}
-			]
+			component: My
 		},
 		// 我的收藏
 		{
 			path: '/collection',
+			meta: {
+				is_login: true,
+				is_keep: true, // 是否需要缓存
+				is_back: false // 是否通过回退按钮点击
+			},
 			name: 'Collection',
 			component: Collection
 		},
 		// 我的菜谱
 		{
 			path: '/diet',
+			meta: {
+				is_login: true,
+				is_keep: true, // 是否需要缓存
+				is_back: false, // 是否通过回退按钮点击
+			},
 			name: 'Diet',
 			component: Diet
+		},
+		// 我的设置
+		{
+			path: '/personal',
+			name: 'Personal',
+			component: Personal
 		},
 		// 我的订单
 		{
 			path: '/orderlist',
 			component: Order,
 			children: [
+				// 全部订单
 				{
 					path: '',
 					name: 'OrderList',
 					component: State_0
 				},
+				// 待付款
 				{
 					path: 'unpaid',
 					name: 'Unpaid',
 					component: State_1
 				},
+				// 待收货
 				{
 					path: 'pack',
 					name: 'Pack',
 					component: State_2
 				},
+				// 待评价
 				{
 					path: 'completed',
 					name: 'Completed',
@@ -378,6 +446,9 @@ const config = new VueRouter({
 	]
 }) 
 
+
+// 路由全局钩子函数
+// 处理问题 通过user_id判断是否登陆，如未登陆则跳转登陆组件，否则继续执行
 
 config.beforeEach((to, from, next) => {
 	if (to.matched.some(item => item.meta.is_login)) {
@@ -392,5 +463,36 @@ config.beforeEach((to, from, next) => {
 		next()
 	}
 })
+
+// 路由全局钩子函数
+// 处理问题， 结合vuex与vue-router来判断是否是通过回退按钮点击进来
+// 使用popstate事件来监听浏览器的前进后退与back操作，如果触发此事件，则代表着是通过回退，在vuex中更改is_back为true
+// 最后在afterEach中把当前的状态添加至路由的元信息(meta)中，最后初始化vuex中回退状态
+
+
+config.afterEach((to, from) => {
+	const { state, commit } = config.app.$store;
+	to.meta.is_back = state.is_back; // 获取vuex中的is_back状态
+
+	if (state.is_back !== null) { // 刷新后vuex中的is_back状态会被清空为null,需要单独处理
+		commit('CHANGE_BACK', false);
+	}
+})
+
+window.addEventListener("popstate", function(e) {
+
+	const { state, commit } = config.app.$store;
+
+	// 当监听到回退按钮时
+	// is_back为null时，也就是已经刷新了当前页面并且清空了vuex,所以返回时应该重新请求数据
+
+	if (state.is_back == null) { 
+		config.app.$store.commit('CHANGE_BACK', false);
+		return;
+	}
+
+	config.app.$store.commit('CHANGE_BACK', true)
+}, false);
+
 
 export default config

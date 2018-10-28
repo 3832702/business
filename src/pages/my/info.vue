@@ -28,14 +28,17 @@
 import { my } from '../../service/index.js'
 import { getStore } from '../../public/js/util.js'
 
+
 export default {
-	created() {
-		this.getData();
-	},
   	data () {
     	return {
     		userInfo: {}
     	}
+  	},
+  	activated() {
+  		if (!this.$route.meta.is_back) {
+  			this.getData();
+  		}
   	},
   	methods: {
   		/**

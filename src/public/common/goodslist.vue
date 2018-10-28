@@ -15,7 +15,7 @@
 		<slot name="subnav"></slot>
 		<div :class="$style.list">
 			<router-link 
-				:to="item.path"
+				:to="{name: 'marketDetails',params: {id: item.id}}"
 				tag="div"
 				:class="$style.item" 
 				v-for="item in goodsListData" 

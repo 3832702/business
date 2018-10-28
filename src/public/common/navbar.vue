@@ -5,6 +5,7 @@
 			tag="div"
 			v-for="item,index in navbarData"
 			:key="index"
+			replace
 		>
 			<img v-if="item.name === $route.name || item.name === $route.meta.baseName " :src="item.active_img"/>
 			<img v-else :src="item.img"/>

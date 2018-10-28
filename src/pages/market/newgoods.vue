@@ -2,10 +2,10 @@
 	<Panel :class="$style.newgoods" :panel-title="panelTitle">
 		<div :class="$style.list">
 			<router-link 
-				:to="item.path"
+				:to="{name: 'marketDetails',params: {id: item.id}}"
 				tag="div"
 				:class="$style.item" 
-				v-for="item in newGoodsData" 
+				v-for="item in new_list" 
 				:key="item.id"
 			>
 				<img :src="item.img">
@@ -27,66 +27,21 @@
 
 import Panel from '../../public/common/panel.vue'
 
-const newGoodsData = [
-	{
-		id: 1,
-		img: 'http://i4.fuimg.com/570833/87af5b95df2639d2s.png',
-		title: '意大利进口奥尼特级初榨橄榄油',
-		price: '199',
-		num: '528',
-		path: '/'
-	},
-	{
-		id: 2,
-		img: 'http://i2.tiimg.com/570833/c9840ff963a35d34s.png',
-		title: '顶级不锈钢刀叉',
-		price: '88',
-		num: '998',
-		path: '/'
-	},
-	{
-		id: 3,
-		img: 'http://i4.fuimg.com/570833/d4990d3a4e8524c5s.png',
-		title: '墨西哥进口牛油果',
-		price: '199',
-		num: '528',
-		path: '/'
-	},
-	{
-		id: 4,
-		img: 'http://i2.tiimg.com/570833/41e46d791fa8efbfs.png',
-		title: '美的WT2121节能电磁炉',
-		price: '499',
-		num: '306',
-		path: '/'
-	},
-	{
-		id: 5,
-		img: 'http://i4.fuimg.com/570833/226ad57291c60202s.png',
-		title: '越南进口黑胡椒粒',
-		price: '19',
-		num: '568',
-		path: '/'
-	},
-	{
-		id: 6,
-		img: 'http://i4.fuimg.com/570833/b98dc4f997a607bcs.png',
-		title: '滋阴美容养生薏米',
-		price: '49',
-		num: '306',
-		path: '/'
-	}
-]
-
 export default {
-	name: 'newgoods',
+	props: {
+		new_list: {
+			type: Array,
+			default() {
+				return []
+			}
+		}
+	},
   	components: {
   		Panel
   	},
   	data () {
     	return {
-    		panelTitle: '最新商品',
-    		newGoodsData
+    		panelTitle: '最新商品'
     	}
   	}
 }

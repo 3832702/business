@@ -1,7 +1,7 @@
 <template>
 	<Panel :panelTitle="panelTitle">
 		<div :class="$style.rob">
-			<div :class="$style.item" v-for="item in robData" :key="item.id">
+			<div :class="$style.item" v-for="item in rob_list" :key="item.id">
 				<img :src="item.img" />
 				<h5>{{ item.title }}</h5>
 				<p :class="$style.price">￥{{ item.price }}</p>
@@ -32,42 +32,21 @@
 
 import Panel from '../../public/common/panel.vue'
 
-const robData = [
-	{
-		id: '1',
-		title: '美国进口无仔黑提',
-		price: '120',
-		original: '158',
-		num: '10',
-		img: 'http://i2.tiimg.com/570833/b2c06a353ba38a94s.png'
-	},
-	{
-		id: '2',
-		title: '法国拉菲传说波多尔AOC红葡萄酒',
-		price: '11220',
-		original: '15800',
-		num: '28',
-		img: 'http://i2.tiimg.com/570833/4efc9676dfa4222ds.png'
-	},
-	{
-		id: '3',
-		title: '澳洲顶级安格斯牛腩块',
-		price: '170',
-		original: '198',
-		num: '2',
-		img: 'http://i2.tiimg.com/570833/2ce6091fb06144e3s.png'
-	}
-]
-
 export default {
-	name: 'rob',
+	props: {
+		rob_list: {
+			type: Array,
+			default() {
+				return []
+			}
+		}
+	},
 	components: {
 		Panel
 	},
   	data () {
     	return {
-    		panelTitle: '限时抢购',
-    		robData
+    		panelTitle: '限时抢购'
     	}
   	}
 }

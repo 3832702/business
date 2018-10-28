@@ -37,3 +37,31 @@ export const my = function(data = {}) {
 			})
 	})
 }
+
+/**
+ * [market 获取集市首页数据]
+ * @return {[type]} [description]
+ */
+export const market = function(){
+	return new Promise((resolve, reject) => {
+		fetch('/api/market', {})
+			.then(res => {
+				resolve(res)
+			})
+			.catch(err => {
+				reject(err)
+			})
+	})
+}
+
+/**
+ * [home 获取首页数据]
+ * @return {[type]} [description]
+ */
+export const home = function() {
+	return new Promise((resolve, reject) => {
+		fetch('/api/home')
+			.then(res => resolve(res))
+			.catch(err => reject(err))
+	})
+}

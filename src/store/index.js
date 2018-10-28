@@ -11,6 +11,7 @@ Vue.use(Vuex)
 const state = {
 	userInfo: {}, // 用户信息
 	login: null, // 是否登陆
+	is_back: null
 }
 
 

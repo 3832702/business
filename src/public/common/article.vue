@@ -1,11 +1,11 @@
 <template>
 	<div :class="$style.article">
 		<router-link 
-			:to="item.path" 
+			to="/" 
 			tag="div" 
 			:class="$style.item" 
-			v-for="item in articleData" 
-			:key="item.id"
+			v-for="item,index in articleData" 
+			:key="index"
 		>
 			<img :src="item.img">
 			<h4>{{ item.title }}</h4>

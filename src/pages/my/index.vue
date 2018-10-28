@@ -5,8 +5,6 @@
     <Entry></Entry>
 
 		<Navbar></Navbar>
-
-    <router-view></router-view>
 	</div>
 </template>
 
@@ -19,8 +17,8 @@ import Navbar from '../../public/common/navbar.vue'
 
 export default {
   beforeRouteEnter(to, from, next) {
-    console.log(to)
     console.log(from)
+    console.log('to', to)
     next();
   },
   components: {
