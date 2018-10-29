@@ -1,7 +1,7 @@
 <template>
 	<div :class="$style.share">
 		<Panel :class="$style.share_panel" panelTitle="最新">
-			<Slider :class="$style.share_slider" :swiperOption="swiperOption" :sliderData="sliderData">
+			<Slider :class="$style.share_slider" :swiperOption="swiperOption" :sliderData="slider_list">
 				<template slot-scope="slotProps">
 					<img :class="$style.sliderimg" :src="slotProps.itemData.img"/>
 				</template>
@@ -16,8 +16,9 @@
 							<span>{{ item.username }}</span>
 							<span>编辑推荐</span>
 						</router-link>
-						<div>
-							<span>关注</span>
+						<div :class="{[$style.already]: item.is_follow }" @click="followHandler(index)">
+							<span :class="$style.follow" v-if="!item.is_follow">关注</span>
+							<span v-else>已关注</span>
 						</div>
 					</div>
 					<img :src="item.img"/>
@@ -26,8 +27,9 @@
 						<p>{{ item.content }}</p>
 					</div>
 					<ul :class="$style.more">
-						<li>
-							<img src="../../static/image/love.png">
+						<li @click="collectionHandler(index)">
+							<img v-if="item.is_Collection" src="../../static/image/love.png">
+							<img v-else src="../../static/image/love2.png">
 						</li>
 						<li>
 							<img src="../../static/image/comment.png">
@@ -64,23 +66,7 @@
 import Panel from '../../public/common/panel.vue'
 import Slider from '../../public/common/slider.vue'
 
-const sliderData = [
-	{
-		id: 1,
-		path: '/',
-		img: 'http://i1.fuimg.com/570833/bd781b9971b9b411s.png'
-	},
-	{
-		id: 2,
-		path: '/',
-		img: 'http://i1.fuimg.com/570833/bd781b9971b9b411s.png'
-	},
-	{
-		id: 3,
-		path: '/',
-		img: 'http://i1.fuimg.com/570833/bd781b9971b9b411s.png'
-	}
-]
+import { follow, collection } from '../../service/index.js'
 
 const swiperOption = {
 	slidesPerView: 2.8,
@@ -88,114 +74,106 @@ const swiperOption = {
 	freeMode: true
 }
 
-const articleData = [
-	{
-		id: 1,
-		avatar: 'http://i1.fuimg.com/570833/92b227843ebf7817s.png',
-		username: 'Carol Mak',
-		is_follow: 0,
-		is_Collection: 0,
-		img: 'http://i1.fuimg.com/570833/948e3441e378dd44s.png',
-		title: '韩式什锦烧烤',
-		content: '皮脆柔滑,连里边的肉都是味道满满的',
-		fabulous_list: [
-			'http://i4.fuimg.com/570833/8933f3aceed6de6es.png',
-			'http://i4.fuimg.com/570833/2354498c7a54256as.png',
-			'http://i4.fuimg.com/570833/bce9bca008e3668bs.png',
-			'http://i4.fuimg.com/570833/3691b57e688fe35cs.png',
-			'http://i4.fuimg.com/570833/3ddb1d5e2dd54777s.png',
-			'http://i4.fuimg.com/570833/0411c02b5e1352e5s.png',
-			'http://i4.fuimg.com/570833/c8a70fa19e9516e9s.png',
-			'http://i4.fuimg.com/570833/c8a70fa19e9516e9s.png'
-		],
-		comment_list: [
-			{
-				name: 'sina_我叫大漂亮',
-				content: '太赞了！'
-			},
-			{
-				name: '盆克雷',
-				content: '一杯小酒，三两知己，伴着烧烤是极好的！！'
-			}
-		],
-		commentCount: 122
-	},
-	{
-		id: 2,
-		avatar: 'http://i2.tiimg.com/570833/9cdd3e3777195c5ds.png',
-		username: '秀智77',
-		is_follow: 0,
-		is_Collection: 0,
-		img: 'http://i2.tiimg.com/570833/05e078b022e08aafs.png',
-		title: '干煸辣子鸡',
-		content: '徐州游子到哪都惦记着的干煸辣子鸡',
-		fabulous_list: [
-			'http://i4.fuimg.com/570833/8933f3aceed6de6es.png',
-			'http://i4.fuimg.com/570833/2354498c7a54256as.png',
-			'http://i4.fuimg.com/570833/bce9bca008e3668bs.png',
-			'http://i4.fuimg.com/570833/3691b57e688fe35cs.png',
-			'http://i4.fuimg.com/570833/3ddb1d5e2dd54777s.png',
-			'http://i4.fuimg.com/570833/0411c02b5e1352e5s.png',
-			'http://i4.fuimg.com/570833/c8a70fa19e9516e9s.png',
-			'http://i4.fuimg.com/570833/c8a70fa19e9516e9s.png'
-		],
-		comment_list: [
-			{
-				name: 'Ccok',
-				content: '很美味的样子呢！哈喇子流一地'
-			},
-			{
-				name: 'sina-美味nisa',
-				content: '是啊，吃着爽爽的！'
-			}
-		],
-		commentCount: 13542
-	},
-	{
-		id: 3,
-		avatar: 'http://i2.tiimg.com/570833/efb44240eec06102s.png',
-		username: '安娜520',
-		is_follow: 0,
-		is_Collection: 0,
-		img: 'http://i4.fuimg.com/570833/5c555e46bb82a0f9s.png',
-		title: '柠檬孜然鸡腿',
-		content: '最喜欢的食物之一 鸡肉带有孜然的香气 柠檬也起到了很好的解腻作用',
-		fabulous_list: [
-			'http://i4.fuimg.com/570833/8933f3aceed6de6es.png',
-			'http://i4.fuimg.com/570833/2354498c7a54256as.png',
-			'http://i4.fuimg.com/570833/bce9bca008e3668bs.png',
-			'http://i4.fuimg.com/570833/3691b57e688fe35cs.png',
-			'http://i4.fuimg.com/570833/3ddb1d5e2dd54777s.png',
-			'http://i4.fuimg.com/570833/0411c02b5e1352e5s.png',
-			'http://i4.fuimg.com/570833/c8a70fa19e9516e9s.png',
-			'http://i4.fuimg.com/570833/c8a70fa19e9516e9s.png'
-		],
-		comment_list: [
-			{
-				name: 'Kitty',
-				content: '看起来就好好吃，晚上等会来试着做做。'
-			},
-			{
-				name: '可可人儿',
-				content: 'OMG！好想吃！！！'
-			}
-		],
-		commentCount: 2542
-	}
-]
-
 export default {
-	name: 'share',
 	components: {
 		Panel,
 		Slider
 	},
+	props: {
+		// 推荐
+		articleData: {
+			type: Array,
+			default() {
+				return []
+			}
+		},
+
+		// 最新
+		slider_list: {
+			type: Array,
+			default() {
+				return []
+			}
+		}
+	},
+	created() {
+		this.user_id = this.$getStore('user_id');
+	},
   	data () {
     	return {
-    		sliderData,
     		swiperOption,
-    		articleData
+    		user_id: '', // 用户id
+    		follow_id: '', // 要关注的用户id
+    		activeIndex: 0, // 当前点击的索引值
+    		collection_id: 0, // 要收藏的帖子id
     	}
+  	},
+  	methods: {
+  		/**
+  		 * [followHandler 点击关注]
+  		 */
+  		followHandler(index) {
+  			let { user_id } = this.articleData[index];
+
+  			this.activeIndex = index;
+  			this.follow_id = user_id;
+
+  			this.fetchFollowHandler();
+  		},
+
+  		/**
+  		 * [fetchFollowHandler 发起关注请求]
+  		 */
+  		fetchFollowHandler() {
+  			const { user_id, follow_id } = this;
+
+  			follow({ user_id, follow_id })
+  				.then(res => { this.changeFollow() })
+  				.catch(err => {console.log(err)})
+  		},
+
+  		/**
+  		 * [changeFollow  处理关注请求]
+  		 */
+  		changeFollow() {
+  			let currObj = this.articleData[this.activeIndex];
+  			const { is_follow } = currObj
+
+  			currObj.is_follow = !is_follow;
+  		},
+
+  		/**
+  		 * [collectionHandler 点击收藏]
+  		 */
+  		collectionHandler(index) {
+  			let { id } = this.articleData[index];
+
+  			this.activeIndex = index;
+  			this.collection_id = id;
+
+  			this.fetchCollectionHandler();
+  		},
+
+  		/**
+  		 * [collectionHandler 发送收藏请求]
+  		 */
+  		fetchCollectionHandler() {
+  			const { user_id, collection_id } = this;
+
+  			collection({ user_id, collection_id })
+  				.then(res => { this.changeCollection() })
+  				.catch(err => {console.log(err)})
+  		},
+
+  		/**
+  		 * [changeCollection 处理收藏请求]
+  		 */
+  		changeCollection() {
+  			let currObj = this.articleData[this.activeIndex];
+  			const { is_Collection } = currObj
+
+  			currObj.is_Collection = !is_Collection;
+  		}
   	}
 }
 </script>
@@ -279,7 +257,7 @@ export default {
 					font-size:20px;
 					text-align:center;
 					line-height:44px;
-					span {
+					.follow {
 						&:before {
 							content: '+';
 							display: inline-block;
@@ -290,6 +268,11 @@ export default {
 							font-size:24px;
 						}
 					}
+				}
+
+				.already {
+					border:2px solid #ffdd00;
+					color:#ffdd00;
 				}
 			}
 

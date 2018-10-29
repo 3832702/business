@@ -1,5 +1,5 @@
 <template>
-	<Recipes :class="$style.crecipes" :recipesData="recipesData">
+	<Recipes :class="$style.crecipes" :recipesData="list">
 		<template slot-scope="slotProps">
 			<p>{{ slotProps.recipes.num }}收藏&nbsp;by&nbsp;{{ slotProps.recipes.author }}</p>
 		</template>
@@ -31,6 +31,14 @@ const recipesData = [
 ]
 
 export default {
+	props: {
+		list: {
+			type: Array,
+			default(){
+				return []
+			}
+		}
+	},
 	components: {
 		Recipes
 	},

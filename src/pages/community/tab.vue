@@ -3,30 +3,30 @@
 		<div :class="$style.head">
 			<router-link
 				to="/community"
-				@click="searchTabHandler(0)"
 				tag="span" 
-				:class="{ communityTabActive: activeIndex === 0 }"
+				:exact-active-class="$style.active"
+				exact
 			>
-				{{ tabData[0].title }}
+				分享
 			</router-link>
 			<router-link
 				to="/community/follow" 
-				@click="searchTabHandler(1)"
 				tag="span" 
-				:class="{ communityTabActive: activeIndex === 1 }"
+				:exact-active-class="$style.active"
+				exact
 			>
-				{{ tabData[1].title }}
+				关注
 			</router-link>
 		</div>
 		<ul :class="$style.content">
 			<router-link 
-				:to="item.path" 
+				:to="topic_list.length === index + 1 ? '/topiclist' : '/topic'" 
 				tag="li" 
-				v-for="item,index in tabData[activeIndex].data" 
+				v-for="item,index in topic_list" 
 				:key="item.id"
 			>
 				<h4>#{{ item.title }}</h4>
-				<p v-if="tabData.length === index + 1"><span>{{ item.num }}</span>个分享</p>
+				<p v-if="topic_list.length === index + 1"><span>{{ item.num }}</span>个分享</p>
 				<p v-else><span>{{ item.num }}</span>个话题</p>
 			</router-link>
 		</ul>
@@ -35,76 +35,35 @@
 
 <script>
 
-const tabData = [
-	{	
-		title: '分享',
-		data: [
-			{	
-				id: 12,
-				title: '戒不掉的甜品',
-				num: 134,
-				path: '/topiclist'
-			},
-			{	
-				id: 13,
-				title: '最爱的香港美食',
-				num: 30,
-				path: '/topiclist'
-			},
-			{	
-				id: 14,
-				title: '更多话题',
-				num: 18,
-				path: '/topic'
-			},
-		],
-	},
-	{	
-		title: '关注',
-		data: [
-			{	
-				id: 12,
-				title: '戒不掉的甜品',
-				num: 134,
-				path: '/'
-			},
-			{	
-				id: 13,
-				title: '最爱的香港美食',
-				num: 30,
-				path: '/'
-			},
-			{	
-				id: 14,
-				title: '更多话题',
-				num: 18,
-				path: '/'
-			},
-		],
-	}
-]
-
 export default {
-	data () {
-    	return {
-    		tabData,
-    		activeIndex: 0
-    	}
-  	},
+	props: {
+		topic_list: {
+			type: Array,
+			default() {
+				return []
+			}
+		}
+	},
+
   	created() {
-  		this.initActiveIndex();
+  		this.changeTypeHandler();
   	},
+
   	watch: {
   		$route() {
-  			this.initActiveIndex();
+  			this.changeTypeHandler();
   		}
   	},
   	methods: {
-  		/*
-  			初始化tab索引值
+
+  		/**
+  		 * [changeTypeHandler 更改type并提交]
+  		 * @return {[type]} [description]
   		 */
-  		initActiveIndex() {
-  			this.activeIndex = this.$route.meta.index;
+  		changeTypeHandler() {
+  			const { index } = this.$route.meta;
+  			if (index == null) return;
+  			this.$emit('emitChangeType', index)
   		}
   	}
 }
@@ -135,6 +94,14 @@ export default {
 				right:100px;
 				top:25px;
 				position:absolute;
+			}
+		}
+
+		.active {
+			color:#ff6e00;
+
+			&:after {
+				background:transparent;
 			}
 		}
 	}
@@ -174,14 +141,4 @@ export default {
 		}
 	}
 }
-</style>
-
-<style type="text/css">
-	.communityTabActive {
-		color:#ff6e00;
-	}
-
-	.communityTabActive:after {
-		background:transparent !important;
-	}
 </style>

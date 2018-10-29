@@ -1,5 +1,5 @@
 <template>
-	<Recipes :recipesData="recipesData" :class="$style.drecipes">
+	<Recipes :recipesData="list" :class="$style.drecipes">
 		<template slot-scope="slotProps">
 			<p>{{ slotProps.recipes.content }}</p>
 		</template>
@@ -9,33 +9,18 @@
 <script>
 import Recipes from '../../../public/common/recipes.vue'
 
-const recipesData = [
-	{
-		id: 1,
-		img: 'http://i4.fuimg.com/570833/ea4a81fab04bff40s.png',
-		title: '黄瓜变蛋',
-		content: '我最喜欢吃的一款凉菜，分享给大家',
-		timer: '2016.3.18'
-	},
-	{
-		id: 2,
-		img: 'http://i4.fuimg.com/570833/f1549d78497c1f0es.png',
-		title: '干煸花菜',
-		content: '今天做的干煸花菜，味道不错哦',
-		timer: '2016.3.1'
-	}
-]
-
 export default {
-	name: 'drecipes',
+	props: {
+		list: {
+			type: Array,
+			default() {
+				return []
+			}
+		}
+	},
 	components: {
 		Recipes
-	},
-  	data () {
-    	return {
-    		recipesData
-    	}
-  	}
+	}
 }
 </script>
 

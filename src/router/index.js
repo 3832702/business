@@ -241,7 +241,9 @@ const config = new VueRouter({
 					path: '',
 					name: 'Community',
 					meta: {
-						index: 0
+						index: 0,
+						is_keep: true,
+						is_back: false
 					},
 					component: Share
 				},
@@ -250,7 +252,9 @@ const config = new VueRouter({
 					path: 'follow',
 					meta: {
 						index: 1,
-						baseName:'Community'
+						baseName:'Community',
+						is_keep: true,
+						is_back: false
 					},
 					component: Follow
 				}
@@ -302,8 +306,8 @@ const config = new VueRouter({
 
 		// 帖子详情
 		{
-			path: '/cooking',
-			name: 'Cooking',
+			path: '/cooking/:id',
+			name: 'cooking',
 			component: Cooking
 		},
 

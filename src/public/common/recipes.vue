@@ -1,13 +1,19 @@
 <template>
 	<div :class="$style.recipes">
-		<div :class="$style.item" v-for="item in recipesData" :key="item.id">
+		<router-link 
+			:to="{name: 'cooking', params: {id: item.id}}" 
+			tag="div" 
+			:class="$style.item" 
+			v-for="item in recipesData" 
+			:key="item.id"
+		>
 			<img :src="item.img"/>
 			<div :class="$style.content">
 				<h4>{{ item.title }}</h4>
 				<slot :recipes="item"></slot>
 				<time>{{ item.timer }}</time>
 			</div>
-		</div>
+		</router-link>
 	</div>
 </template>
 

@@ -1,18 +1,33 @@
 import axios from 'axios'
 import Vue from 'vue'
+import store from '../store/index.js'
 
 if (process.env.NODE_ENV === 'production') {
 	axios.defaults.baseURL = 'https://easy-mock.com/mock/5b5fb5fd9f3d1d7bfe3a6fb8/example'
 }
 
-//http response 拦截器
+// request拦截器
+axios.interceptors.request.use(
+	config => {
+		// 显示加载动画
+		store.commit('CHANGE_LOADING', true)
+		return config
+	},
+	error => {
+		store.commit('CHANGE_LOADING', false)
+		return Promise.reject(error)
+	}
+)
+
+//response 拦截器
 axios.interceptors.response.use(
   response => {
+  	store.commit('CHANGE_LOADING', false)
     return response;
   },
   error => {
-  	
-    return Promise.reject(err)
+  	store.commit('CHANGE_LOADING', false)
+    return Promise.reject(error)
   }
 )
 

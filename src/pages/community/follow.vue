@@ -2,7 +2,7 @@
 	<div :class="$style.list">
 		<div 
 			:class="$style.item" 
-			v-for="item in followData" 
+			v-for="item,index in followData" 
 			:key="item.id"
 		>
 			<div :class="$style.head">
@@ -11,7 +11,7 @@
 					<span>{{ item.username }}</span>
 					<span>编辑推荐</span>
 				</router-link>
-				<div>
+				<div v-if="false">
 					<img src="../../static/image/love1.png">
 				</div>
 			</div>
@@ -19,8 +19,9 @@
 			<div :class="$style.content">
 				<h4>{{ item.title }}</h4>
 				<p>{{ item.content }}</p>
-				<div>
-					<img src="../../static/image/love2.png">
+				<div @click="collectionHandler(index)">
+					<img v-if="item.is_Collection" src="../../static/image/love.png">
+					<img v-else src="../../static/image/love2.png">
 				</div>
 			</div>
 		</div>
@@ -29,35 +30,60 @@
 
 <script>
 
-const followData = [
-	{
-		id: 1,
-		avatar: 'http://i4.fuimg.com/570833/3691b57e688fe35cs.png',
-		username: 'Carol Maky',
-		img: 'http://i1.fuimg.com/570833/f44a23c82cfdac3bs.png',
-		title: '香辣猪排',
-		content: '香酥嫩滑，无时无刻不在挑逗你的眼球和味蕾',
-		is_collection: 0,
-		is_love: 0
-	},
-	{
-		id: 2,
-		avatar: 'http://i2.tiimg.com/570833/efb44240eec06102s.png',
-		username: '安娜520',
-		img: 'http://i4.fuimg.com/570833/5c555e46bb82a0f9s.png',
-		title: '柠檬孜然鸡腿',
-		content: '最喜欢的食物之一 鸡肉带有孜然的香气 柠檬也起到了很好的解腻作用',
-		is_collection: 0,
-		is_love: 0
-	}
-]
-
+import { collection } from '../../service/index.js'
+	
 export default {
-	name: 'follow',
+	props: {
+		followData: {
+			type: Array,
+			default() {
+				return []
+			}
+		}
+	},
+	created() {
+		this.user_id = this.$getStore('user_id');
+	},
   	data () {
     	return {
-    		followData
+    		user_id: '', // 用户id
+    		activeIndex: 0, // 当前点击的索引值
+    		collection_id: 0, // 要收藏的帖子id
     	}
+  	},
+  	methods: {
+  		/**
+  		 * [collectionHandler 点击收藏]
+  		 */
+  		collectionHandler(index) {
+  			let { id } = this.followData[index];
+
+  			this.activeIndex = index;
+  			this.collection_id = id;
+
+  			this.fetchCollectionHandler();
+  		},
+
+  		/**
+  		 * [collectionHandler 发送收藏请求]
+  		 */
+  		fetchCollectionHandler() {
+  			const { user_id, collection_id } = this;
+
+  			collection({ user_id, collection_id })
+  				.then(res => { this.changeCollection() })
+  				.catch(err => {console.log(err)})
+  		},
+
+  		/**
+  		 * [changeCollection 处理收藏请求]
+  		 */
+  		changeCollection() {
+  			let currObj = this.followData[this.activeIndex];
+  			const { is_Collection } = currObj
+
+  			currObj.is_Collection = !is_Collection;
+  		}
   	}
 }
 </script>

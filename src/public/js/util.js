@@ -1,3 +1,5 @@
+import Vue from 'vue'
+
 /**
  * [setStore 存储localStorage]
  * @param {[String]} name    [key值]
@@ -24,5 +26,12 @@ export const getStore = function (name) {
 
 	return window.localStorage.getItem(name)
 }
+
+Vue.use({
+	install(vm) {
+		vm.prototype.$setStore = setStore;
+		vm.prototype.$getStore = getStore
+	}
+})
 
 

@@ -1,7 +1,8 @@
 import {
 	GET_USERINFO,
 	RECORD_USERINFO,
-	CHANGE_BACK
+	CHANGE_BACK,
+	CHANGE_LOADING
 } from './mutation-type.js'
 
 
@@ -24,5 +25,10 @@ export default {
 	// 监控浏览器前进后退以及back
 	[CHANGE_BACK](state, status) {
 		state.is_back = status;
+	},
+
+	// 是否正在加载
+	[CHANGE_LOADING](state, status) {
+		state.loading = status
 	}
 }
