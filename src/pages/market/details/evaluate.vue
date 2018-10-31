@@ -1,12 +1,12 @@
 <template>
 	<div :class="$style.evaluate">
 		<div>
-			<span>( {{ evaluateData.num }} )</span>
-			<span>{{ evaluateData.praise }}</span>
+			<span>( {{ evaluate.num }} )</span>
+			<span>{{ evaluate.praise }}</span>
 		</div>
 		<ul>
 			<li 
-				v-for="item in evaluateData.list"
+				v-for="item in evaluate.list"
 				:key="item.id"
 			>
 				<div>
@@ -28,45 +28,15 @@
 
 <script>
 
-const evaluateData = {
-	praise: '96%',
-	num: 61,
-	list: [
-		{
-			id: 1,
-			avatar: 'http://i4.fuimg.com/570833/612a9c7e6b3b8bb0s.jpg',
-			is_praise: 1,
-			user_name: '小狗汪汪汪',
-			content: '三文鱼分量很足，味道也鲜美。小狗汪汪汪',
-			pic_list: [
-				'http://i4.fuimg.com/570833/41abff403069f9a3s.jpg',
-				'http://i4.fuimg.com/570833/41abff403069f9a3s.jpg',
-				'http://i4.fuimg.com/570833/41abff403069f9a3s.jpg',
-				'http://i4.fuimg.com/570833/41abff403069f9a3s.jpg'
-			]
-		},
-		{
-			id: 2,
-			avatar: 'http://i4.fuimg.com/570833/612a9c7e6b3b8bb0s.jpg',
-			is_praise: 1,
-			user_name: '小狗汪汪汪',
-			content: '三文鱼分量很足，味道也鲜美。中午煎的三文鱼家人都赞不绝口！三文鱼',
-			pic_list: [
-				'http://i4.fuimg.com/570833/41abff403069f9a3s.jpg',
-				'http://i4.fuimg.com/570833/41abff403069f9a3s.jpg',
-				'http://i4.fuimg.com/570833/41abff403069f9a3s.jpg',
-				'http://i4.fuimg.com/570833/41abff403069f9a3s.jpg'
-			]
-		}
-	]
-}
-
 export default {
-	data () {
-    	return {
-    		evaluateData
-    	}
-  	}
+	props: {
+		evaluate: {
+			type: Object,
+			default() {
+				return {}
+			}
+		}
+	}
 }
 </script>
 

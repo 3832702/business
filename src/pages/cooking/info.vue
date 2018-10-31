@@ -1,38 +1,37 @@
 <template>
 	<div :class="$style.head">
-		<img src="http://i2.tiimg.com/570833/a9dff4656d5bbd5cs.png"/>
-		<h4>香辣蟹</h4>	
+		<img :src="article.banner"/>
+		<h4>{{ article.title }}</h4>	
 		<div :class="$style.user">
-			<img src="http://i4.fuimg.com/570833/612a9c7e6b3b8bb0s.jpg">
-			<p>离城的小柚</p>
-			<span>+ 关注</span>
+			<img :src="article.avatar">
+			<p>{{ article.username }}</p>
+			<span @click="followHandler" v-if="!article.is_follow">+ 关注</span>
+			<span @click="followHandler" v-else>已关注</span>
 		</div>	
 		<p>
-			26376浏览-5000收藏-10学做
+			{{ article.rowse_num }}浏览-{{ article.collection_num }}收藏-{{ article.study_num }}学做
 		</p>
-		<div :class="$style.more">
+		<div v-if="article.is_sole" :class="$style.more">
 			<span>独家</span>
 		</div>
 		<hr>
-		<div :class="$style.content">
-			<img src="http://i2.tiimg.com/570833/a9dff4656d5bbd5cs.png"/>
-			<p>1.买蟹的时候一定要注意看蟹是不是新鲜的，别买了快死的回来，买回来之后清洗干净</p>
-			<img src="http://i2.tiimg.com/570833/a9dff4656d5bbd5cs.png"/>
-			<p>2.买蟹的时候一定要注意看蟹是不是新鲜的，别买了快死的回来，买回来之后清洗干净</p>
-			<img src="http://i2.tiimg.com/570833/a9dff4656d5bbd5cs.png"/>
-			<p>3.买蟹的时候一定要注意看蟹是不是新鲜的，别买了快死的回来，买回来之后清洗干净</p>
-			<img src="http://i2.tiimg.com/570833/a9dff4656d5bbd5cs.png"/>
-			<p>4.买蟹的时候一定要注意看蟹是不是新鲜的，别买了快死的回来，买回来之后清洗干净</p>
-		</div>
+		<div :class="$style.content" v-html="article.content"></div>
 		<ul :class="$style.release">
 			<li>上传我学做的</li>
-			<li>27条评论</li>
+			<li>{{ article.comment_num }}条评论</li>
 		</ul>
-		<time>- 发布于2016.9.20 -</time>
+		<time>- 发布于{{ article.timer }} -</time>
 		<div :class="$style.interactive">
 			<div>
 				<router-link to="/comment" tag="span">评论</router-link>
-				<span>收藏</span>
+				<span 
+					@click="collectionHandler" 
+					v-if="article.is_Collection" 
+					:class="$style.collection"
+				>
+					已收藏
+				</span>
+				<span @click="collectionHandler" v-else>收藏</span>
 			</div>
 		</div>
 	</div>
@@ -40,12 +39,63 @@
 
 <script>
 
+import { follow, collection } from '../../service/index.js'
+
 export default {
-	data () {
-    	return {
-    		
-    	}
-  	}
+	props: {
+		article: {
+			type: Object,
+			default() {
+				return {}
+			}
+		}
+	},
+	methods: {
+		getUserId() {
+			return this.$getStore('user_id');
+		},
+
+		/**
+		 * [followHandler 请求关注接口]
+		 * @return {[type]} [description]
+		 */
+		followHandler() {
+			const { user_id: follow_id } = this.article;
+			const opt = { user_id: this.getUserId(), follow_id  }
+			follow(opt)
+				.then(res => this.changeFollowHandler())
+				.catch(err => console.log(err))
+		},
+
+		/**
+		 * [changeFollowHandler 更改关注]
+		 * @return {[type]} [description]
+		 */
+		changeFollowHandler() {
+			this.article.is_follow = !this.article.is_follow;
+		},
+
+		/**
+		 * [collectionHandler 发送收藏请求]
+		 * @return {[type]} [description]
+		 */
+		collectionHandler() {
+			const { id: collection_id } = this.article;
+			const opt = { user_id: this.getUserId(), collection_id  }
+
+			collection(opt)
+				.then(res => this.changeCollectionHandler())
+				.catch(err => console.log(err))
+		},
+
+		/**
+		 * [changeCollectionHandler 更改收藏]
+		 * @return {[type]} [description]
+		 */
+		changeCollectionHandler() {
+			this.article.is_Collection = !this.article.is_Collection;
+		}
+	}
 }
 </script>
 
@@ -216,7 +266,7 @@ export default {
 				@include list(row);
 				align-items:center;
 				font-size: 24px;
-				width: 96px;
+				width: 126px;
 				color:#666666;
 				&:before {
 					content: ' ';
@@ -246,9 +296,16 @@ export default {
 
 				&:last-child {
 					&:before {
-						background:url('../../static/image/stars1.png');
+						background:url('../../static/image/love2.png');
 						background-size:cover;
 					}
+				}
+			}
+
+			.collection {
+				&:before {
+					background:url('../../static/image/love3.png') !important;
+					background-size:cover !important;
 				}
 			}
 		}

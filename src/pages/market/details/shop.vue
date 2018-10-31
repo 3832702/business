@@ -19,30 +19,22 @@
 			<li>发货速度<span>{{ shopData.speed_rate }}</span></li>
 		</ul>
 		<div :class="$style.ensure">
-			<img :src="shopData.ensure"/>
+			<img src="../../../static/image/ensure.png"/>
 		</div>
 	</div>
 </template>
 
 <script>
 
-const shopData = {
-	title: '鲜活旗舰店',
-	avatar: 'http://i4.fuimg.com/570833/612a9c7e6b3b8bb0s.jpg',
-	count: 36,
-	desc: '新鲜生活 感受味道',
-	desc_rate: '4.8',
-	service_rate: '4.6',
-	speed_rate: '4.7',
-	ensure: require('../../../static/image/ensure.png')
-}
-
 export default {
-	data () {
-    	return {
-    		shopData
-    	}
-  	}
+	props: {
+		shopData: {
+			type: Object,
+			default() {
+				return {}
+			}
+		}
+	}
 }
 </script>
 

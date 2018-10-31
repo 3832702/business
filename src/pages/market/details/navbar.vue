@@ -8,8 +8,13 @@
 			<img src="../../../static/image/shop.png" />
 			<h4>店铺</h4>
 		</router-link>
-		<button :class="$style.add">加入购物车</button>
-		<router-link to="/orderdetails" tag="button">立即购买</router-link>
+		<button @click="addCartHandler" :class="$style.add">加入购物车</button>
+		<router-link 
+			:to="{path: '/orderdetails'}" 
+			tag="button"
+		>
+			立即购买
+		</router-link>
 	</div>
 </template>
 
@@ -19,6 +24,14 @@ export default {
     	return {
 
     	}
+  	},
+  	methods: {
+  		/**
+  		 * [addCartHandler 添加购物车]
+  		 */
+  		addCartHandler() {
+  			this.$emit('emitAddCart')
+  		}
   	}
 }
 </script>

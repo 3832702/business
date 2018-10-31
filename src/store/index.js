@@ -13,10 +13,14 @@ const state = {
 	login: null, // 是否登陆
 	is_back: null,
 	loading: null, // 是否加载
+	popup: false, // 是否显示弹窗
+	commodity: {}, // 商品详情数据
+	address: '', // 收货地址
 }
 
 
 export default new Vuex.Store({
+	strict: process.env.NODE_ENV !== 'production',
 	state,
 	mutations,
 	actions,

@@ -36,7 +36,7 @@ export default {
     	}
   	},
   	activated() {
-  		if (!this.$route.meta.is_back) {
+  		if (!this.$route.meta.is_back || !this.userInfo.username) {
   			this.getData();
   		}
   	},

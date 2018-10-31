@@ -1,8 +1,10 @@
 import {
-	GET_USERINFO,
 	RECORD_USERINFO,
 	CHANGE_BACK,
-	CHANGE_LOADING
+	CHANGE_LOADING,
+	CHANGE_POPUP,
+	RECORD_COMMODITY,
+	RECORD_ADDRESS
 } from './mutation-type.js'
 
 
@@ -12,14 +14,7 @@ export default {
 	// 记录信息
 	[RECORD_USERINFO](state, info) {
 		state.userInfo = info;
-		state.login = true;
 		setStore('user_id', info.user_id)
-	},
-	// 获取用户信息
-	[GET_USERINFO](state, info) {
-		if (state.userInfo && (state.userInfo.username !== info.username)) return
-		if (!state.login) return
-		state.userInfo = !info.message ? {...info} : null
 	},
 
 	// 监控浏览器前进后退以及back
@@ -30,5 +25,20 @@ export default {
 	// 是否正在加载
 	[CHANGE_LOADING](state, status) {
 		state.loading = status
+	},
+
+	// 是否显示弹窗
+	[CHANGE_POPUP](state, status) {
+		state.popup = status
+	},
+
+	// 记录商品详情
+	[RECORD_COMMODITY](state, data) {
+		state.commodity = data
+	},
+
+	// 记录收货地址
+	[RECORD_ADDRESS](state, data) {
+		state.address = data
 	}
 }

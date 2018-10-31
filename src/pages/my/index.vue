@@ -16,11 +16,6 @@ import Entry from './entry.vue'
 import Navbar from '../../public/common/navbar.vue'
 
 export default {
-  beforeRouteEnter(to, from, next) {
-    console.log(from)
-    console.log('to', to)
-    next();
-  },
   components: {
     Heador,
     Info,

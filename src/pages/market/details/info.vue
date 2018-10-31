@@ -1,7 +1,7 @@
 <template>
 	<div :class="$style.info">
 		<img :src="infoData.img"/>
-		<h4>{{ infoData.title }}</h4>
+		<h4>{{ infoData.title }}-- 商品id {{ commodity_id }}</h4>
 		<p>￥{{ infoData.price }}</p>
 		<ul>
 			<li>
@@ -13,31 +13,52 @@
 			</li>
 		</ul>
 		<div :class="$style.desc" v-html="infoData.desc"></div>
-		<div :class="$style.select"><span>已选 {{ infoData.select }}</span></div>
-		<div :class="$style.select"><span>配送至 {{ infoData.address }}</span></div>
+		<div @click="changeSelectHandler" :class="$style.select"><span>已选 {{ infoData.select }} *{{ infoData.num }}</span></div>
+		<div 
+			@click="changeAddressHandler" 
+			:class="$style.select"
+		>
+			<span>配送至 {{ address.content || '请选择收货地址' }}</span>
+		</div>
 	</div>
 </template>
 
 <script>
-
-const infoData = {
-	title: '挪威进口冰鲜 新鲜三文鱼整条中断刺身500G配芥末酱油 深海海域捕捞 肉质新鲜',
-	img: 'http://i2.tiimg.com/570833/a9dff4656d5bbd5cs.png',
-	price: '120.00',
-	city: '北上深',
-	sales_num: 160,
-	freight: 20,
-	select: '三文鱼500g',
-	address: '挪威进口冰鲜 新鲜三文鱼整条中断刺身500G配芥末酱油 深海海域捕捞 肉质新鲜',
-	desc: '<p>冰冻健康 全熟烹饪食用 香煎口感</p><p>今日下单次日到达,优质食材直送到家,满199元免运费!</p>'
-}
+import { mapState } from 'vuex'	
 
 export default {
-	data () {
-    	return {
-    		infoData
-    	}
-  	}
+	props: {
+		infoData: {
+			type: Object,
+			default(){
+				return {}
+			}
+		},
+		commodity_id: [String, Number]
+	},
+	computed: {
+		...mapState(['address'])
+	},
+	methods: {
+
+		/**
+		 * [changeSelectHandler 提交给父组件，告知已选被点击]
+		 * @return {[type]} [description]
+		 */
+		changeSelectHandler() {
+			this.$emit('emitChangeSelected', true)
+			this.$store.commit('CHANGE_POPUP', true)
+		},
+
+		/**
+		 * [changeAddressHandler 提交给父组件，告知已选被点击]
+		 * @return {[type]} [description]
+		 */
+		changeAddressHandler() {
+			this.$emit('emitChangeAddress', true)
+			this.$store.commit('CHANGE_POPUP', true)
+		}
+	}
 }
 </script>
 

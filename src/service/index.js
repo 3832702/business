@@ -8,15 +8,7 @@ import { fetch, post } from '../fetch/index.js'
  * @return {[Promise]}      [promise决议]
  */
 export const login = function (data = {}) {
-	return new Promise((resolve, reject) => {
-		post('/api/login', data)
-		.then(res => {
-			resolve(res)
-		})
-		.catch(err => {
-			reject(err)
-		})
-	})
+	return post('/api/login', data)
 }
 
 
@@ -27,43 +19,23 @@ export const login = function (data = {}) {
  * @return {[type]}      [description]
  */
 export const my = function(data = {}) {
-	return new Promise((resolve, reject) => {
-		post('/api/my', data)
-			.then(res => {
-				resolve(res)
-			})
-			.catch(err => {
-				reject(err)
-			})
-	})
+	return post('/api/my', data)
 }
 
 /**
  * [market 获取集市首页数据]
  * @return {[type]} [description]
  */
-export const market = function(){
-	return new Promise((resolve, reject) => {
-		fetch('/api/market', {})
-			.then(res => {
-				resolve(res)
-			})
-			.catch(err => {
-				reject(err)
-			})
-	})
+export const market = function(params){
+	return fetch('/api/market', params)
 }
 
 /**
  * [home 获取首页数据]
  * @return {[type]} [description]
  */
-export const home = function() {
-	return new Promise((resolve, reject) => {
-		fetch('/api/home')
-			.then(res => resolve(res))
-			.catch(err => reject(err))
-	})
+export const home = function(params) {
+	return fetch('/api/home', params)
 }
 
 /**
@@ -72,12 +44,8 @@ export const home = function() {
  * @param {[Number]} data {type} [为0时代表分享，为1时代表关注]
  * @return {[type]}      [description]
  */
-export const community = function (data) {
-	return new Promise((resolve, reject) => {
-		post('/api/community', data)
-			.then(res => resolve(res))
-			.catch(err => reject(err))
-	})
+export const community = function (data = {}) {
+	return post('/api/community', data)
 }
 
 
@@ -88,26 +56,18 @@ export const community = function (data) {
  * @param {[follow_id]} data [要关注用户的标识]
  * @return {[type]}      [description]
  */
-export const follow = function (data) {
-	return new Promise((resolve, reject) => {
-		post('/api/follow', data)
-			.then(res => resolve(res))
-			.catch(err => reject(err))
-	})
+export const follow = function (data = {}) {
+	return post('/api/follow', data)
 }
 
 /**
  * [collection 点击收藏]
  * @param  {[Object]} data [要传的参数]
  * @param {[user_id]} data [自己的标识]
- * @param {[follow_id]} data [要关注用户的标识]
+ * @param {[collection_id]} data [要收藏帖子的id]
  */
-export const collection = function (data) {
-	return new Promise((resolve, reject) => {
-		post('/api/collection', data)
-			.then(res => resolve(res))
-			.catch(err => reject(err))
-	})
+export const collection = function (data = {}) {
+	return post('/api/collection', data)
 }
 
 /**
@@ -115,12 +75,8 @@ export const collection = function (data) {
  * @param  {[Object]} data [user_id]
  * @return {[type]}      [description]
  */
-export const myCollection = function (data) {
-	return new Promise((resolve, reject) => {
-		post('/api/my_collection', data)
-			.then(res => resolve(res))
-			.catch(err => reject(err))
-	})
+export const myCollection = function (data = {}) {
+	return post('/api/my_collection', data)
 }
 
 /**
@@ -128,10 +84,38 @@ export const myCollection = function (data) {
  * @param  {[type]} data [description]
  * @return {[type]}      [description]
  */
-export const myDiet = function (data) {
-	return new Promise((resolve, reject) => {
-		post('/api/my_diet', data)
-			.then(res => resolve(res))
-			.catch(err => reject(err))
-	})
+export const myDiet = function (data = {}) {
+	return post('/api/my_diet', data)
+}
+
+
+/**
+ * [article 文章详情]
+ * @param  {[type]} data [description]
+ * @return {[type]}      [description]
+ */
+export const article = function(data = {}) {
+	return post('/api/article', data)
+}
+
+/**
+ * [commodity 获取商品详情]
+ * @param  {[Object]} data [description]
+ * @param  {[Stirng]} user_id [自身标识]
+ * @param  {[String]} commodity_id [产品id]
+ * @return {[type]}      [description]
+ */
+export const commodity = function(data = {}) {
+	return post('/api/commodity', data);
+}
+
+/**
+ * [addCart 加入购物车]
+ * @param {[Object]} data [description]
+ * @param {[String]} user_id [user_id]
+ * @param {[Number]} num [产品数量]
+ * @param {[String]} commodity_id  [产品id]
+ */
+export const addCart = function(data = {}) {
+	return post('/api/addcart', data)
 }

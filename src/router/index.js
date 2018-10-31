@@ -211,6 +211,10 @@ const config = new VueRouter({
 		{
 			path: '/marketdetails/:id',
 			name: 'marketDetails',
+			meta: {
+				is_keep: true, // 是否需要缓存
+				is_back: false, // 是否通过回退按钮点击
+			},
 			component: MarketDetails
 		},
 		// 店铺页
@@ -228,7 +232,7 @@ const config = new VueRouter({
 		// 购物车
 		{
 			path: '/cart',
-			name: 'Cart',
+			name: 'cart',
 			component: Cart
 		},
 		// 社区

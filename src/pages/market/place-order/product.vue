@@ -1,13 +1,17 @@
 <template>
 	<div :class="$style.product">
 		
-		<div :class="[$style.list, {[$style.first]: index === 0 }]" v-for="item,index in shopData" :key="index">
+		<div 
+			:class="[$style.list, {[$style.first]: index === 0 }]" 
+			v-for="item,index in commodityData" 
+			:key="index"
+		>
 			<div :class="$style.head">
-				<span>{{ item.shopname }}</span>
+				<span>{{ item.shop_name }}</span>
 			</div>
 			<ul>
 				<li v-for="productsItem in item.products" :key="productsItem.id">
-					<img :src="productsItem.avatar"/>
+					<img :src="productsItem.img"/>
 					<div :class="$style.info">
 						<h4>{{ productsItem.title }}</h4>
 						<p>{{ productsItem.specifications }}</p>
@@ -18,57 +22,25 @@
 			</ul>
 		</div>
 		<div :class="$style.remarks">
-			<textarea placeholder="给卖家留言"></textarea>
+			<textarea placeholder="备注"></textarea>
 		</div>
 	</div>
 </template>
 
 <script>
-const shopData = [
-	{
-		shopname: '鲜活旗舰店',
-		products: [
-			{
-				id: 1,
-				title: '挪威进口冰鲜 新鲜三文鱼...',
-				avatar: 'http://i4.fuimg.com/570833/41abff403069f9a3s.jpg',
-				price: 120,
-				specifications: '500g'
-			},
-			{
-				id: 2,
-				title: '挪威进口冰鲜 新鲜三文鱼...',
-				avatar: 'http://i4.fuimg.com/570833/41abff403069f9a3s.jpg',
-				price: 120,
-				specifications: '500g'
-			}
-		]
-	},
-	{
-		shopname: '鲜活旗舰店',
-		products: [
-			{
-				id: 1,
-				title: '挪威进口冰鲜 新鲜三文鱼...',
-				avatar: 'http://i4.fuimg.com/570833/41abff403069f9a3s.jpg',
-				price: 120,
-				specifications: '500g'
-			},
-			{
-				id: 2,
-				title: '挪威进口冰鲜 新鲜三文鱼...',
-				avatar: 'http://i4.fuimg.com/570833/41abff403069f9a3s.jpg',
-				price: 120,
-				specifications: '500g'
-			}
-		]
-	}		
-]
-
+	
 export default {
+	props: {
+		commodityData: {
+			type: Array,
+			default() {
+				return [];
+			}
+		}
+	},
 	data () {
     	return {
-    		shopData
+    		
     	}
   	}
 }
