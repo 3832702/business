@@ -8,7 +8,7 @@ import Home from '../pages/home/index.vue'
 import Market from '../pages/market/index.vue'
 import My from '../pages/my/index.vue'
 import Community from '../pages/community/index.vue'
-
+// 1111
 
 // 我的设置
 import Personal from '../pages/my/personal/index.vue'
@@ -132,14 +132,14 @@ const config = new VueRouter({
 	scrollBehavior(to, from, savedPosition) {
 		if (savedPosition) {
 			return savedPosition
-		} 
+		}
 
 		return {x: 0, y: 0}
 	},
 	routes: [
 		// 主页
 		{
-			path: '/',  
+			path: '/',
 			name: 'Home',
 			component: Home,
 			meta: {
@@ -149,7 +149,7 @@ const config = new VueRouter({
 		},
 		// 首页 今日最新
 		{
-			path: '/newest',  
+			path: '/newest',
 			name: 'Newest',
 			component: Newest
 		},
@@ -452,7 +452,7 @@ const config = new VueRouter({
 			]
 		}
 	]
-}) 
+})
 
 
 // 路由全局钩子函数
@@ -494,7 +494,7 @@ window.addEventListener("popstate", function(e) {
 	// 当监听到回退按钮时
 	// is_back为null时，也就是已经刷新了当前页面并且清空了vuex,所以返回时应该重新请求数据
 
-	if (state.is_back == null) { 
+	if (state.is_back == null) {
 		config.app.$store.commit('CHANGE_BACK', false);
 		return;
 	}
